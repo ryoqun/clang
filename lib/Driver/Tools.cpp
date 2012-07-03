@@ -1893,7 +1893,8 @@ void Clang::ConstructJob(Compilation &C, const JobAction &JA,
   // -mno-omit-leaf-frame-pointer is the default on Darwin.
   if (Args.hasFlag(options::OPT_momit_leaf_frame_pointer,
                    options::OPT_mno_omit_leaf_frame_pointer,
-                   !getToolChain().getTriple().isOSDarwin()))
+                   !getToolChain().getTriple().isOSDarwin()) &&
+                   !shouldUseFramePointer(Args, getToolChain().getTriple()))
     CmdArgs.push_back("-momit-leaf-frame-pointer");
 
   // Explicitly error on some things we know we don't support and can't just
